@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Vaga } from '../model/vaga.model';
-import { Curriculo } from '../model/curriculo.model'
+import { Curriculo } from '../model/curriculo.model';
 import { console } from 'inspector';
 
 @Injectable({
@@ -51,7 +51,7 @@ export class Apiservice {
   // PUT
   putCurriculo(id: any, curriculo: Curriculo): Observable<Curriculo[]> {
     const urlUpdate = `${this.apiUrl}/${id}`;
-    return this.http.put<Curriculo[]>(urlUpdate, Curriculo);
+    return this.http.put<Curriculo[]>(urlUpdate, curriculo);
   }
   // DELETE
   deleteCurriculo(id: any): Observable<Curriculo[]> {

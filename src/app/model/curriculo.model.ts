@@ -9,12 +9,20 @@ export class Curriculo {
   skills: string = '';
 
   // 2. Construtor
-  constructor(id: number, nome: string, telefone: number, email: string, experiencia: string, formacao: string, skills: string){
+  constructor(
+    id: number,
+    nome: string,
+    telefone: number,
+    email: string,
+    experiencia: string,
+    formacao: string,
+    skills: string,
+  ) {
     this.id = id;
     this.nome = nome;
-    this.telefone =  telefone;
+    this.telefone = telefone;
     this.email = email;
-    this.experiencia  = experiencia;
+    this.experiencia = experiencia;
     this.formacao = formacao;
     this.skills = skills;
   }
@@ -22,7 +30,7 @@ export class Curriculo {
   // 3. métodos
   // Mapamento de Dados da AP (toMap e fromMap)
   // toMap: OBJ -> API´
-  toMap(): { [key: string]: any} {
+  toMap(): { [key: string]: any } {
     return {
       id: this.id,
       nome: this.nome,
@@ -36,6 +44,7 @@ export class Curriculo {
 
   // FromMap : API -> OBJ
   fromMap(map: any): Curriculo {
-    return new Curriculo(map.id, map.nome, map.telefone, map.email, map.experiencia, map.formacao, map.skills)
+    return new Curriculo(map.id,map.nome, map.telefone, map.email, map.experiencia, map.formacao, map.skills,
+    );
   }
 }

@@ -1,3 +1,63 @@
-<section class="listar-curriculos">
+<div class="curriculo-container">
+  <header class="page-header">
+    <h1>Meu Currículo</h1>
+    <p class="subtitle">Gerencie suas informações profissionais para se candidatar às vagas.</p>
+  </header>
 
-</section>
+  <!-- CASO 1: Usuário JÁ possui um currículo cadastrado -->
+  <mat-card class="curriculo-card" *ngIf="meuCurriculo; else semCurriculo">
+    <mat-card-header>
+      <div mat-card-avatar class="avatar-icon">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <mat-card-title class="candidate-name">{{ meuCurriculo.nomeCompleto }}</mat-card-title>
+      <mat-card-subtitle>
+        <a [href]="meuCurriculo.linkedin" target="_blank" class="linkedin-link">
+          <mat-icon class="inline-icon">link</mat-icon> Perfil no LinkedIn
+        </a>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="card-body">
+      <section class="info-section">
+        <h3><mat-icon>school</mat-icon> Formação Acadêmica</h3>
+        <p>{{ meuCurriculo.formacao }}</p>
+      </section>
+
+      <section class="info-section">
+        <h3><mat-icon>work</mat-icon> Experiência Profissional</h3>
+        <p>{{ meuCurriculo.experiencia }}</p>
+      </section>
+
+      <section class="info-section">
+        <h3><mat-icon>psychology</mat-icon> Habilidades e Competências</h3>
+        <div class="skills-tags">
+          <span class="skill-tag">{{ meuCurriculo.habilidades }}</span>
+        </div>
+      </section>
+    </mat-card-content>
+
+    <mat-card-actions class="card-actions">
+      <button mat-flat-button color="primary" [routerLink]="['/curriculos/editar', meuCurriculo.id]">
+        <mat-icon>edit</mat-icon> Editar Currículo
+      </button>
+      <button mat-stroked-button color="warn" (click)="excluirCurriculo(meuCurriculo.id!)">
+        <mat-icon>delete</mat-icon> Excluir
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- CASO 2: Usuário NÃO possui currículo -->
+  <ng-template #semCurriculo>
+    <mat-card class="empty-card">
+      <mat-card-content class="empty-content">
+        <mat-icon class="empty-icon">description</mat-icon>
+        <h2>Você ainda não tem um currículo cadastrado</h2>
+        <p>Aumente suas chances de contratação preenchendo seu perfil profissional agora mesmo.</p>
+        <button mat-raised-button color="primary" routerLink="/curriculos/novo">
+          <mat-icon>add</mat-icon> Criar Meu Currículo
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>

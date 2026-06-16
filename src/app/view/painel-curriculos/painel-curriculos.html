@@ -1,20 +1,101 @@
-<h2>Preencha seu curriculo</h2>
-<form action="">
-  <label for="nome">Nome</label>
-  <input id="nome" type="text" [(ngModel)] = "curriculo.nome">
+<div class="painel-container">
+  <header class="page-header">
+    <h1>Painel Administrativo de Currículos</h1>
+    <p class="subtitle">Gerencie o banco de talentos, visualize informações de contato e atualize cadastros.</p>
+  </header>
 
-  <label for="telefone">Telefone</label>
-  <input id="telefone" type="text">
+  <div class="painel-layout">
 
-  <label for="email">Email</label>
-  <input id="email" type="text">
+    <div class="lista-secao">
+      <mat-card class="table-card">
+        <mat-card-header class="table-header">
+          <mat-card-title>Candidatos no Banco (Total: {{ curriculos.length }})</mat-card-title>
+        </mat-card-header>
 
-  <label for="experiencia">Experiencia</label>
-  <input id="experiencia" type="text">
+        <mat-card-content>
+          <div class="no-data" *ngIf="curriculos.length === 0">
+            <mat-icon>person_search</mat-icon>
+            <p>Nenhum currículo localizado no banco simulado.</p>
+          </div>
 
-  <label for="formacao">Formação</label>
-  <input id="formacao" type="text">
+          <mat-list class="candidate-list" *ngIf="curriculos.length > 0">
+            <mat-list-item *ngFor="let c of curriculos" class="candidate-item" [class.active]="curriculo.id === c.id">
+              <mat-icon matListIcon class="list-avatar" (click)="ListarCurriculoUnico(c)">assignment_ind</mat-icon>
 
-  <label for="skills">Skills</label>
-  <input id="skills" type="text">
-</form>
+              <div class="candidate-info" (click)="ListarCurriculoUnico(c)">
+                <h4 class="name">{{ c.nome }}</h4>
+                <p class="meta-info">
+                  <span><mat-icon class="mini-icon">email</mat-icon> {{ c.email }}</span>
+                  <span><mat-icon class="mini-icon">phone</mat-icon> {{ c.telefone }}</span>
+                </p>
+                <p class="skills-preview"><strong>Skills:</strong> {{ c.skills }}</p>
+              </div>
+
+              <div class="actions-wrapper">
+                <button mat-icon-button color="primary" (click)="ListarCurriculoUnico(c)" matTooltip="Editar/Visualizar">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="excluirCurriculo(c.id)" matTooltip="Excluir">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="formulario-secao">
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-card-title>{{ curriculo.id === 0 ? 'Cadastrar Novo Perfil' : 'Atualizar Perfil ID: ' + curriculo.id }}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="form-content">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Nome Completo</mat-label>
+            <input matInput [(ngModel)]="curriculo.nome" name="nome" placeholder="Ex: João Silva">
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="fill">
+              <mat-label>E-mail de Contato</mat-label>
+              <input matInput type="email" [(ngModel)]="curriculo.email" name="email" placeholder="nome@provedor.com">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Telefone (Somente números)</mat-label>
+              <input matInput type="number" [(ngModel)]="curriculo.telefone" name="telefone" placeholder="11999999999">
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Habilidades / Skills</mat-label>
+            <input matInput [(ngModel)]="curriculo.skills" name="skills" placeholder="Ex: Angular, TypeScript, Scrum">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Formação Acadêmica</mat-label>
+            <textarea matInput [(ngModel)]="curriculo.formacao" name="formacao" rows="3" placeholder="Detalhes da graduação, cursos..."></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Experiência Profissional</mat-label>
+            <textarea matInput [(ngModel)]="curriculo.experiencia" name="experiencia" rows="3" placeholder="Histórico de cargos anteriores..."></textarea>
+          </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-actions class="form-actions">
+          <button *ngIf="curriculo.id === 0" mat-raised-button color="primary" (click)="cadastrarCurriculo()">
+            <mat-icon>add</mat-icon> Salvar Candidato
+          </button>
+
+          <button *ngIf="curriculo.id !== 0" mat-raised-button color="accent" (click)="atualizarCurriculo(curriculo.id)">
+            <mat-icon>sync</mat-icon> Atualizar Cadastro
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
+</div>
